@@ -1,6 +1,5 @@
 const dns = require('dns');
 const fs = require('fs');
-const retry = require('promise-retry');
 const pbar = require('cli-progress');
 
 class Scanner {
@@ -10,7 +9,7 @@ class Scanner {
 		this.records = [];
 
 		this.batch = 0;
-		this.batchSize = 64;
+		this.batchSize = 8;
 		this.bar = new pbar.Bar(
 			{ format: 'Scanning #{value} of {total}... {bar} {percentage}% | {eta_formatted} remaining' },
 			pbar.Presets.shades_classic
@@ -19,7 +18,7 @@ class Scanner {
 		this.file = fs.createWriteStream('dns-records.json');
 		this.file.write('[');
 
-		dns.setServers([ '210.0.128.250', '210.0.128.251', '1.1.1.1', '1.0.0.1', '8.8.8.8', '8.8.4.4' ]);
+		dns.setServers([ '1.1.1.1', '1.0.0.1', '8.8.8.8', '8.8.4.4' ]);
 	}
 
 	ip2dec(ip) {

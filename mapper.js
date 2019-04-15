@@ -7,6 +7,7 @@ class Mapper {
 		this.last = null;
 		this.current = null;
 		this.netmask = [ 255, 255, 255, 252 ];
+		this.graph = new Map();
 		this.output = fs.createWriteStream('./graph.gv');
 
 		jsonRead('./dns-records.json').done((e, data) => {
@@ -23,8 +24,8 @@ class Mapper {
 		this.output.write('\t# Graph Start\n');
 	}
 
-	writeGVNode(start, end, colour) {
-		this.output.write(`\t${start} -- ${end} [color=${colour}]\n`);
+	writeGVNode(start, end, colour, label) {
+		this.output.write(`\t${start} -- ${end} [color=${colour},label="${label}"]\n`);
 	}
 
 	writeGVEnd() {
@@ -35,7 +36,6 @@ class Mapper {
 	inSameSubnet(a, b) {
 		let parseIP = ip => ip.split('.').map(o => parseInt(o));
 		let aa = parseIP(a);
-		let bb = parseIP(b);
 
 		let ipPair = [
 			[
@@ -56,26 +56,43 @@ class Mapper {
 	}
 
 	linkSpeedToColour(indicator) {
-		switch (indicator.toLowerCase()) {
+		if (indicator < 10000) {
+			return 'black';
+		} else if (indicator < 50000) {
+			return 'blue';
+		} else if (indicator < 100000) {
+			return 'green';
+		} else if (indicator < 200000) {
+			return 'orange';
+		} else {
+			return 'red';
+		}
+	}
+
+	linkSpeedToNumber(indicator) {
+		switch (indicator) {
 			case 'fa':
 			case 'fe':
-				return 'red';
+				return 100;
+			case 'g':
 			case 'gi':
 			case 'ge':
-				return 'yellow';
+				return 1000;
 			case 'te':
 			case 'ten':
 			case 'teng':
 			case 'tenge':
-				return 'blue';
+				return 10000;
 			case 'hu':
 			case 'hundredge':
 			case 'hundredgige':
-				return 'orange';
+				return 100000;
 			case 'pos':
-				return 'green';
+				return 2488; // Multiple speeds exists
+			case 'ser':
+				return 45; // Assume T3/E1
 			default:
-				return 'black';
+				return 0;
 		}
 	}
 
@@ -85,12 +102,40 @@ class Mapper {
 
 		if (parts !== null) {
 			return {
-				node: parts[8],
+				node: parts[8].substr(0, 3),
 				speed: parts[2],
 			};
 		}
 
 		return false;
+	}
+
+	addToGraph(a, b) {
+		let name = [a.node, b.node].sort().join('-');
+
+		if (this.graph.has(name)) {
+			let old = this.graph.get(name);
+			this.graph.set(name, old.concat([ this.linkSpeedToNumber(a.speed) ]));
+		} else {
+			this.graph.set(name, [ this.linkSpeedToNumber(a.speed) ]);
+		}
+	}
+
+	formatSpeed(num) {
+		let mag = Math.floor(Math.log(num) / Math.log(1000));
+		let speeds = ['bps', 'Kbps', 'Mbps', 'Gbps', 'Tbps'];
+		return (num / Math.pow(1000, mag)) + speeds[mag];
+	}
+
+	processGraph() {
+		this.graph.forEach((speeds, pair) => {
+			let totalThroughput = speeds.reduce((a, b) => a + b, 0);
+			let nodes = pair.split('-');
+
+			this.writeGVNode(nodes[0], nodes[1], this.linkSpeedToColour(totalThroughput), ` ${this.formatSpeed(totalThroughput * 1000000)}`);
+		});
+
+		this.writeGVEnd();
 	}
 
 	process() {
@@ -110,11 +155,7 @@ class Mapper {
 				if (prevIPdata !== false && currentIPdata !== false) {
 					// Both IPs are interface IPs
 					if (prevIPdata.node != currentIPdata.node) {
-						this.writeGVNode(
-							prevIPdata.node,
-							currentIPdata.node,
-							this.linkSpeedToColour(currentIPdata.speed)
-						);
+						this.addToGraph(currentIPdata, prevIPdata);
 					}
 				}
 			}
@@ -122,7 +163,7 @@ class Mapper {
 			this.last = entry;
 		});
 
-		this.writeGVEnd();
+		this.processGraph();
 	}
 }
 

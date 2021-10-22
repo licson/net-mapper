@@ -60,6 +60,10 @@ typings/
 # next.js build output
 .next
 
+package-lock.json
+
 # scan files
 dns-records.json
+geomap.json
 graph.gv
+temp.mjs

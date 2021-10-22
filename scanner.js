@@ -9,7 +9,7 @@ class Scanner {
 		this.records = [];
 
 		this.batch = 0;
-		this.batchSize = 8;
+		this.batchSize = 32;
 		this.bar = new pbar.Bar(
 			{ format: 'Scanning #{value} of {total}... {bar} {percentage}% | {eta_formatted} remaining' },
 			pbar.Presets.shades_classic
@@ -18,28 +18,28 @@ class Scanner {
 		this.file = fs.createWriteStream('dns-records.json');
 		this.file.write('[');
 
-		dns.setServers([ '1.1.1.1', '1.0.0.1', '8.8.8.8', '8.8.4.4' ]);
+		dns.setServers(['1.1.1.1', '1.0.0.1', '8.8.8.8', '8.8.4.4']);
 	}
 
 	ip2dec(ip) {
-		var octets = ip.split('.').map(oct => parseInt(oct));
+		let octets = ip.split('.').map(oct => parseInt(oct));
 		return octets[0] << 24 | octets[1] << 16 | octets[2] << 8 | octets[3];
 	}
 
 	dec2ip(dec) {
-		var b1 = dec >> 24 & 0xff;
-		var b2 = dec >> 16 & 0xff;
-		var b3 = dec >> 8 & 0xff;
-		var b4 = dec & 0xff;
-		return [ b1, b2, b3, b4 ].join('.');
+		let b1 = dec >> 24 & 0xff;
+		let b2 = dec >> 16 & 0xff;
+		let b3 = dec >> 8 & 0xff;
+		let b4 = dec & 0xff;
+		return [b1, b2, b3, b4].join('.');
 	}
 
 	dec2ptr(dec) {
-		var b1 = dec >> 24 & 0xff;
-		var b2 = dec >> 16 & 0xff;
-		var b3 = dec >> 8 & 0xff;
-		var b4 = dec & 0xff;
-		return [ b4, b3, b2, b1 ].join('.') + '.in-addr.arpa';
+		let b1 = dec >> 24 & 0xff;
+		let b2 = dec >> 16 & 0xff;
+		let b3 = dec >> 8 & 0xff;
+		let b4 = dec & 0xff;
+		return [b4, b3, b2, b1].join('.') + '.in-addr.arpa';
 	}
 
 	writeRecord(record) {
@@ -57,14 +57,13 @@ class Scanner {
 			this.batchSize = this.endIP - pointer + 1;
 		}
 
-		var self = this;
-		var pendingResolveJobs = [];
+		let pendingResolveJobs = [];
 
-		for (var i = 0; i < this.batchSize; i++) {
-			var addr = pointer + i;
-			var resolveJob = new Promise(function(resolve) {
-				var ip = self.dec2ip(addr);
-				dns.resolvePtr(self.dec2ptr(addr), function(e, result) {
+		for (let i = 0; i < this.batchSize; i++) {
+			let addr = pointer + i;
+			let resolveJob = new Promise((resolve) => {
+				let ip = this.dec2ip(addr);
+				dns.resolvePtr(this.dec2ptr(addr), (e, result) => {
 					if (e)
 						resolve(null);
 					else
@@ -72,23 +71,23 @@ class Scanner {
 							ip: ip,
 							name: result[0],
 						});
-					
-					self.bar.increment();
+
+					this.bar.increment();
 				});
 			});
 
 			pendingResolveJobs.push(resolveJob);
 		}
 
-		Promise.all(pendingResolveJobs).then(function(result) {
-			self.records = self.records.concat(result.filter(i => i !== null));
-			self.batch++;
+		Promise.all(pendingResolveJobs).then((result) => {
+			this.records = this.records.concat(result.filter(i => i !== null));
+			this.batch++;
 
 			result.forEach(i => {
-				if (i !== null) self.writeRecord(i);
+				if (i !== null) this.writeRecord(i);
 			});
 
-			self.process(pointer + self.batchSize);
+			this.process(pointer + this.batchSize);
 		});
 	}
 
@@ -106,5 +105,5 @@ class Scanner {
 	}
 }
 
-var a = new Scanner({ start: '63.216.0.0', end: '63.223.255.255' });
+let a = new Scanner({ start: '63.216.0.0', end: '63.223.255.255' });
 a.start();

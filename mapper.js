@@ -6,9 +6,9 @@ class Mapper {
 		this.data = null;
 		this.last = null;
 		this.current = null;
-		this.netmask = [ 255, 255, 255, 252 ];
+		this.netmask = [255, 255, 255, 252];
 		this.graph = new Map();
-		this.output = fs.createWriteStream('./graph.gv');
+		this.output = null;
 
 		jsonRead('./dns-records.json').done((e, data) => {
 			if (e) process.exit(1);
@@ -57,33 +57,54 @@ class Mapper {
 
 	linkSpeedToColour(indicator) {
 		if (indicator < 10000) {
-			return 'black';
+			return '#000000';
 		} else if (indicator < 50000) {
-			return 'blue';
+			return '#2980e3';
 		} else if (indicator < 100000) {
-			return 'green';
+			return '#3fe329';
 		} else if (indicator < 200000) {
-			return 'orange';
+			return '#f5ae16';
 		} else {
-			return 'red';
+			return '#f5164e';
+		}
+	}
+
+	linkSpeedToWidth(indicator) {
+		if (indicator < 10000) {
+			return 2;
+		} else if (indicator < 50000) {
+			return 5;
+		} else if (indicator < 100000) {
+			return 7;
+		} else if (indicator < 200000) {
+			return 10;
+		} else {
+			return 12;
 		}
 	}
 
 	linkSpeedToNumber(indicator) {
-		switch (indicator) {
+		switch (indicator.toLowerCase()) {
 			case 'fa':
 			case 'fe':
 				return 100;
 			case 'g':
 			case 'gi':
 			case 'ge':
+			case 'gig':
 				return 1000;
 			case 'te':
 			case 'ten':
 			case 'teng':
+			case 'tengi':
 			case 'tenge':
+			case 'tengege':
+			case 'tengige':
 				return 10000;
 			case 'hu':
+			case 'hun':
+			case 'hunge':
+			case 'hundredg':
 			case 'hundredge':
 			case 'hundredgige':
 				return 100000;
@@ -115,9 +136,9 @@ class Mapper {
 
 		if (this.graph.has(name)) {
 			let old = this.graph.get(name);
-			this.graph.set(name, old.concat([ this.linkSpeedToNumber(a.speed) ]));
+			this.graph.set(name, old.concat([this.linkSpeedToNumber(a.speed)]));
 		} else {
-			this.graph.set(name, [ this.linkSpeedToNumber(a.speed) ]);
+			this.graph.set(name, [this.linkSpeedToNumber(a.speed)]);
 		}
 	}
 
@@ -128,19 +149,78 @@ class Mapper {
 	}
 
 	processGraph() {
+		this.output = fs.createWriteStream('./graph.gv');
+		this.writeGVHead();
+
 		this.graph.forEach((speeds, pair) => {
 			let totalThroughput = speeds.reduce((a, b) => a + b, 0);
 			let nodes = pair.split('-');
 
-			this.writeGVNode(nodes[0], nodes[1], this.linkSpeedToColour(totalThroughput), ` ${this.formatSpeed(totalThroughput * 1000000)}`);
+			this.writeGVNode(nodes[0], nodes[1], this.linkSpeedToColour(totalThroughput), this.formatSpeed(totalThroughput * 1000000));
 		});
 
 		this.writeGVEnd();
 	}
 
-	process() {
-		this.writeGVHead();
+	processGeoJson() {
+		let geojson = { type: "FeatureCollection", features: [] };
+		let lookupTable = JSON.parse(fs.readFileSync('./pop2loc.json'));
+		let lookup = (node) => {
+			if (!lookupTable.hasOwnProperty(node)) return [0, 0];
+			return [lookupTable[node].lng, lookupTable[node].lat];
+		}
 
+		this.output = fs.createWriteStream('./geomap.json');
+
+		Object.keys(lookupTable).forEach((location) => {
+			geojson.features.push({
+				type: "Feature",
+				properties: {
+					name: lookupTable[location].name,
+					code: location
+				},
+				geometry: {
+					type: "Point",
+					coordinates: [lookupTable[location].lng, lookupTable[location].lat]
+				}
+			});
+		});
+
+		this.graph.forEach((speeds, pair) => {
+			let totalThroughput = speeds.reduce((a, b) => a + b, 0);
+			let nodes = pair.split('-');
+
+			// Unknown PoP, skip
+			if (!(lookupTable.hasOwnProperty(nodes[0]) && lookupTable.hasOwnProperty(nodes[1]))) return;
+
+			geojson.features.push({
+				type: "Feature",
+				properties: {
+					// Styles
+					stroke: this.linkSpeedToColour(totalThroughput),
+					'stroke-width': this.linkSpeedToWidth(totalThroughput),
+					'stroke-opacity': 1,
+					// Information
+					name: pair,
+					from: nodes[0],
+					to: nodes[1],
+					speed: this.formatSpeed(totalThroughput * 1000000)
+				},
+				geometry: {
+					type: "LineString",
+					coordinates: [
+						lookup(nodes[0]),
+						lookup(nodes[1])
+					]
+				}
+			});
+		});
+
+		this.output.write(JSON.stringify(geojson));
+		this.output.end();
+	}
+
+	process() {
 		this.data.forEach(entry => {
 			if (entry === null) return;
 
@@ -164,6 +244,7 @@ class Mapper {
 		});
 
 		this.processGraph();
+		this.processGeoJson();
 	}
 }
 

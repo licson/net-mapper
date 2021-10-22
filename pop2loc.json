@@ -1,0 +1,377 @@
+{
+    "doh": {
+        "name": "Doha, Qater",
+        "lat": 25.2854473,
+        "lng": 51.53103979999999
+    },
+    "cas": {
+        "name": "Casablanca, Morocco",
+        "lat": 33.5731104,
+        "lng": -7.589843399999999
+    },
+    "mca": {
+        "name": "McAllen, Texas, USA",
+        "lat": 26.2034071,
+        "lng": -98.23001239999999
+    },
+    "ath": {
+        "name": "Athens, Greece",
+        "lat": 37.9838096,
+        "lng": 23.7275388
+    },
+    "mil": {
+        "name": "Milan, Italy",
+        "lat": 45.4642035,
+        "lng": 9.189982
+    },
+    "chc": {
+        "name": "Chicago, Illinois, USA",
+        "lat": 41.8781136,
+        "lng": -87.6297982
+    },
+    "ash": {
+        "name": "Ashburn, Virginia, USA",
+        "lat": 39.0437567,
+        "lng": -77.4874416
+    },
+    "dub": {
+        "name": "Dubai",
+        "lat": 25.2048493,
+        "lng": 55.2707828
+    },
+    "mpm": {
+        "name": "Maputo, Mozambique",
+        "lat": -25.969248,
+        "lng": 32.5731746
+    },
+    "mba": {
+        "name": "Mombasa, Keyna",
+        "lat": -4.0434771,
+        "lng": 39.6682065
+    },
+    "abj": {
+        "name": "Abidjan Cote D’Ivoire, Ivory Coast",
+        "lat": 5.3599517,
+        "lng": -4.0082563
+    },
+    "mex": {
+        "name": "Mexico City, Mexico",
+        "lat": 19.4326077,
+        "lng": -99.133208
+    },
+    "dkr": {
+        "name": "Dakar, Senegal",
+        "lat": 14.716677,
+        "lng": -17.4676861
+    },
+    "lim": {
+        "name": "Lima, Peru",
+        "lat": -12.0463731,
+        "lng": -77.042754
+    },
+    "ams": {
+        "name": "Amsterdam, Netherlands",
+        "lat": 52.3675734,
+        "lng": 4.9041389
+    },
+    "kla": {
+        "name": "Kampala, Uganda",
+        "lat": 0.3475964,
+        "lng": 32.5825197
+    },
+    "fjr": {
+        "name": "Fujairah, UAE",
+        "lat": 25.1288099,
+        "lng": 56.3264849
+    },
+    "lar": {
+        "name": "Laredo, Texas, USA",
+        "lat": 27.5035613,
+        "lng": -99.5075519
+    },
+    "bru": {
+        "name": "Brussels, Belgium",
+        "lat": 50.8503396,
+        "lng": 4.3517103
+    },
+    "jkt": {
+        "name": "Jakarta, Indonesia",
+        "lat": -6.2087634,
+        "lng": 106.845599
+    },
+    "jib": {
+        "name": "Djibouti",
+        "lat": 11.825138,
+        "lng": 42.590275
+    },
+    "aqj": {
+        "name": "Aqaba, Jordan",
+        "lat": 29.5320522,
+        "lng": 35.0063209
+    },
+    "ldn": {
+        "name": "London, England",
+        "lat": 51.5072178,
+        "lng": -0.1275862
+    },
+    "jnb": {
+        "name": "Johannesburg, South Africa",
+        "lat": -26.2041028,
+        "lng": 28.0473051
+    },
+    "dar": {
+        "name": "Dares es Salaam, Tanzania",
+        "lat": -6.792354,
+        "lng": 39.2083284
+    },
+    "jed": {
+        "name": "Jeddah, Saudi Arabia",
+        "lat": 21.485811,
+        "lng": 39.19250479999999
+    },
+    "hkg": {
+        "name": "Hong Kong",
+        "lat": 22.3193039,
+        "lng": 114.1693611
+    },
+    "tor": {
+        "name": "Toronto, Canada",
+        "lat": 43.653226,
+        "lng": -79.3831843
+    },
+    "frf": {
+        "name": "Frankfurt, Germany",
+        "lat": 50.1109221,
+        "lng": 8.6821267
+    },
+    "lax": {
+        "name": "Los Angeles, California, USA",
+        "lat": 34.0522342,
+        "lng": -118.2436849
+    },
+    "lun": {
+        "name": "Lusaka, Zambia",
+        "lat": -15.3875259,
+        "lng": 28.3228165
+    },
+    "bne": {
+        "name": "Brisbane, Australia",
+        "lat": -27.4704528,
+        "lng": 153.0260341
+    },
+    "acc": {
+        "name": "Accra, Ghana",
+        "lat": 5.6037168,
+        "lng": -0.1869644
+    },
+    "dal": {
+        "name": "Dallas, Texas, USA",
+        "lat": 32.7766642,
+        "lng": -96.79698789999999
+    },
+    "mia": {
+        "name": "Miami, Florida, USA",
+        "lat": 25.7616798,
+        "lng": -80.1917902
+    },
+    "gru": {
+        "name": "Sao Paulo, Brazil",
+        "lat": -23.5557714,
+        "lng": -46.6395571
+    },
+    "cpt": {
+        "name": "Cape Town, South Africa",
+        "lat": -33.9248685,
+        "lng": 18.4240553
+    },
+    "klp": {
+        "name": "Kula Lumpur, Malaysia",
+        "lat": 3.139003,
+        "lng": 101.686855
+    },
+    "stk": {
+        "name": "Stockholm, Sweden",
+        "lat": 59.32932349999999,
+        "lng": 18.0685808
+    },
+    "cai": {
+        "name": "Cairo, Eygpt",
+        "lat": 30.0444196,
+        "lng": 31.2357116
+    },
+    "los": {
+        "name": "Lagos, Nigeria",
+        "lat": 6.5243793,
+        "lng": 3.3792057
+    },
+    "mnl": {
+        "name": "Manila, Phillipines",
+        "lat": 14.5995124,
+        "lng": 120.9842195
+    },
+    "bkk": {
+        "name": "Bangkok, Thailand",
+        "lat": 13.7563309,
+        "lng": 100.5017651
+    },
+    "gos": {
+        "name": "Gosselies, Belgium",
+        "lat": 50.4687201,
+        "lng": 4.431955900000001
+    },
+    "rst": {
+        "name": "Reston, Virginia, USA",
+        "lat": 38.9586307,
+        "lng": -77.35700279999999
+    },
+    "phl": {
+        "name": "Philadelphia, PA, USA",
+        "lat": 39.9525839,
+        "lng": -75.1652215
+    },
+    "ruh": {
+        "name": "Riyadh, Saudi Arabia",
+        "lat": 24.7135517,
+        "lng": 46.6752957
+    },
+    "tok": {
+        "name": "Tokyo, Japan",
+        "lat": 35.6761919,
+        "lng": 139.6503106
+    },
+    "syd": {
+        "name": "Sydney, Australia",
+        "lat": -33.8688197,
+        "lng": 151.2092955
+    },
+    "seo": {
+        "name": "Seoul, South Korea",
+        "lat": 37.566535,
+        "lng": 126.9779692
+    },
+    "sjo": {
+        "name": "San Jose, California, USA",
+        "lat": 37.3382082,
+        "lng": -121.8863286
+    },
+    "nyc": {
+        "name": "New York City, USA",
+        "lat": 40.7127753,
+        "lng": -74.0059728
+    },
+    "bog": {
+        "name": "Bogata, Columbia",
+        "lat": 4.710988599999999,
+        "lng": -74.072092
+    },
+    "scl": {
+        "name": "Santiago, Chile",
+        "lat": -33.4488897,
+        "lng": -70.6692655
+    },
+    "mrs": {
+        "name": "Marseilles, France",
+        "lat": 43.296482,
+        "lng": 5.36978
+    },
+    "tap": {
+        "name": "Taipei, Taiwan",
+        "lat": 25.0329636,
+        "lng": 121.5654268
+    },
+    "mtu": {
+        "name": "Mtunzini, South Africa",
+        "lat": -28.9596737,
+        "lng": 31.7500778
+    },
+    "sin": {
+        "name": "Singapore",
+        "lat": 1.352083,
+        "lng": 103.819836
+    },
+    "osa": {
+        "name": "Osaka, Japan",
+        "lat": 34.6937249,
+        "lng": 135.5022535
+    },
+    "sea": {
+        "name": "Seattle, Washington, USA",
+        "lat": 47.6062095,
+        "lng": -122.3320708
+    },
+    "par": {
+        "name": "Paris, France",
+        "lat": 48.856614,
+        "lng": 2.3522219
+    },
+    "mad": {
+        "name": "Madrid, Spain",
+        "lat" : 40.4167754,
+        "lng" : -3.7037902
+    },
+    "lad": {
+        "name": "Luanda, Angola",
+        "lat" : -8.8146556,
+        "lng" : 13.2301756
+    },
+    "pnh": {
+        "name": "Phnom Penh, Cambodia",
+        "lat" : 11.5563738,
+        "lng" : 104.9282099
+    },
+    "eze": {
+        "name": "Buenos Aires, Argentina",
+        "lat" : -34.6036844,
+        "lng" : -58.3815591
+    },
+    "jax": {
+        "name": "Jacksonville, FL, USA",
+        "lat" : 30.3321838,
+        "lng" : -81.65565099999999
+    },
+    "per": {
+        "name": "Perth, Australia",
+        "lat" : -31.9523123,
+        "lng" : 115.861309
+    },
+    "zrh": {
+        "name": "Zurich, Switzerland",
+        "lat" : 47.3768866,
+        "lng" : 8.541694
+    },
+    "nbo": {
+        "name": "Nairobi, Kenya",
+        "lat" : -1.2920659,
+        "lng" : 36.8219462
+    },
+    "sof": {
+        "name": "Sofia, Bulgaria",
+        "lat" : 42.6977082,
+        "lng" : 23.3218675
+    },
+    "beg": {
+        "name": "Belgrade, Serbia",
+        "lat" : 44.8125449,
+        "lng" : 20.4612299
+    },
+    "buh": {
+        "name": "Bucharest, Romania",
+        "lat" : 44.4267674,
+        "lng" : 26.1025384
+    },
+    "hcm": {
+        "name": "Ho Chi Minh City, Vietnam",
+        "lat" : 10.8230989,
+        "lng" : 106.6296638
+    },
+    "han": {
+        "name": "Hanoi, Vietnam",
+        "lat" : 21.0277644,
+        "lng" : 105.8341598
+    },
+    "atl": {
+        "name": "Atlanta, GA, USA",
+        "lat" : 33.7489954,
+        "lng" : -84.3879824
+    }
+}
